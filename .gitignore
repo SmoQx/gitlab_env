@@ -1,0 +1,5 @@
+venv
+logs
+data
+back
+config/gitlab-secrets.json

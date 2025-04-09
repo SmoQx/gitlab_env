@@ -1,0 +1,62 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    hostname: 'gitlab'
+    ports:
+      - '8929:8929'
+      - '443:443'
+      - '2424:22'
+      - '80:80'
+      - '9090:9090'
+    volumes:
+      - './config:/etc/gitlab'
+      - './logs:/var/log/gitlab'
+      - './data:/var/opt/gitlab'
+      - /var/run/docker.sock:/var/run/docker.sock  # Docker socket for Portainer to manage Docker
+    shm_size: '256m'
+    restart: unless-stopped
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+    networks:
+      - gitlab_net
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"  # Portainer web UI (HTTP)
+      - "9443:9443"  # Portainer web UI (HTTPS)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Docker socket for Portainer to manage Docker
+      - portainer_data:/data
+    networks:
+      - gitlab_net
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: gitlab-runner
+    hostname: gitlab-runner
+    restart: always
+    depends_on:
+      - gitlab
+    volumes:
+      - ./gitlab-runner-config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock  # docker socket for docker-in-docker support
+    networks:
+      - gitlab_net
+    entrypoint: ["gitlab-runner", "run", "--user=gitlab-runner"]
+
+volumes:
+  gitlab-data:
+  gitlab-logs:
+  gitlab-config:
+  portainer_data:
+  gitlab-runner-config:  
+
+networks:
+  gitlab_net:
+    driver: bridge
