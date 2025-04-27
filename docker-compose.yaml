@@ -61,6 +61,7 @@ services:
     networks:
       - gitlab_net
 
+
 volumes:
   gitlab-data:
   gitlab-logs:
