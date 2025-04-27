@@ -50,6 +50,17 @@ services:
       - gitlab_net
     entrypoint: ["gitlab-runner", "run", "--user=gitlab-runner"]
 
+  runner_ip_changer:
+    build: ./change_ip_in_runner
+    container_name: runner_ip_changer
+    volumes:
+      - ./gitlab-runner-config:/app/gitlab-runner-config
+    depends_on:
+      - gitlab
+      - portainer
+    networks:
+      - gitlab_net
+
 volumes:
   gitlab-data:
   gitlab-logs:
