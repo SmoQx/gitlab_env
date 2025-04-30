@@ -3,8 +3,15 @@ import toml
 import pathlib
 import re
 import sys
-import schedule
+#import schedule
 import time
+
+
+def get_ip_in_file() -> str:
+    path_to_toml = pathlib.Path("./gitlab-runner-config/config.toml")
+    config_file = toml.load(path_to_toml)
+    extra_hosts: str = config_file["runners"][0]["docker"]["extra_hosts"][0]
+    return extra_hosts
 
 
 def change_ip_address_in_toml(ip_address: str):
@@ -54,18 +61,20 @@ def start_script():
         if ip := get_container_ip("gitlab", "gitlab_gitlab_net"):
             change_ip_address_in_toml(ip)
             print("Changed the ip address")
-            sys.exit(0)
         else:
             print("Couldn't find proper network raising and exception function returend None")
             raise TypeError
     except Exception as e:
         print(f"There was and error /n {e}")
-        sys.exit(1)
 
 
 if __name__ == "__main__":
-    schedule.every(5).minutes.do(start_script)
-
+#    schedule.every(5).minutes.do(start_script)
+#
     while True:
-        schedule.run_pending()
-        time.sleep(1)
+        container_ip = get_container_ip("gitlab", "gitlab_gitlab_net")
+        ip_in_file = get_ip_in_file()
+        if container_ip != ip_in_file:
+            start_script()
+        time.sleep(10)
+    

@@ -55,9 +55,21 @@ services:
     container_name: runner_ip_changer
     volumes:
       - ./gitlab-runner-config:/app/gitlab-runner-config
+      - /var/run/docker.sock:/var/run/docker.sock  # docker socket for docker-in-docker support
     depends_on:
       - gitlab
       - portainer
+    networks:
+      - gitlab_net
+
+  user_adder:
+    build: ./add_user_to_gitlab
+    container_name: user_adder
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # docker socket for docker-in-docker support
+    depends_on:
+      gitlab:
+        condition: service_healthy
     networks:
       - gitlab_net
 
