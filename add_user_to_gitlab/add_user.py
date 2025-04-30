@@ -101,12 +101,9 @@ end
 
 
 def start_script():
-    try:
-        print(add_user_to_gitlab("gitlab", "gitlab_gitlab_net", "usr"))
-        print(register_global_runner("gitlab", "gitlab_gitlab_net"))
-        print("started")
-    except Exception as e:
-        print(f"There was and error /n {e}")
+    print(add_user_to_gitlab("gitlab", "gitlab_gitlab_net", "usr"))
+    print(register_global_runner("gitlab", "gitlab_gitlab_net"))
+    print("started")
 
 
 if __name__ == "__main__":
