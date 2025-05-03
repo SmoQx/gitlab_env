@@ -6,7 +6,7 @@ shutdown_timeout = 0
 name = "gitlab-runner"
 url = "http://gitlab/"
 id = 46
-token = "t3_Nodkjof5f-bZ1ArWZZwQ"
+token = "glrt-t3_ozPDN3pQcccJHcbqaUza"
 token_obtained_at = 2025-04-07T14:27:06Z
 token_expires_at = 0001-01-01T00:00:00Z
 executor = "docker"
@@ -24,7 +24,7 @@ volumes = [ "/cache",]
 shm_size = 0
 network_mtu = 0
 network_mode = "host"
-extra_hosts = [ "gitlab:172.27.0.2",]
+extra_hosts = [ "gitlab:172.20.0.2",]
 
 [session_server]
 session_timeout = 1800

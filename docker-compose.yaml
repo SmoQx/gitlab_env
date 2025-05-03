@@ -73,6 +73,18 @@ services:
     networks:
       - gitlab_net
 
+  create_repository:
+    build: ./projekt_automatyzacja
+    container_name: create_repository
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # docker socket for docker-in-docker support
+    depends_on:
+      gitlab:
+        condition: service_healthy
+      user_adder:
+        condition: service_completed_successfully
+    networks:
+      - gitlab_net
 
 volumes:
   gitlab-data:
