@@ -44,6 +44,13 @@ def get_container_ip(container_name, network_name="bridge") -> str | None:
 
     try:
         container = client.containers.get(container_name)
+        network = container.attrs["NetworkSettings"]["Networks"]
+        for key, value in network.items():
+            if network_name in key:
+                print(network)
+                network_name = key
+                break
+
         ip_address = container.attrs["NetworkSettings"]["Networks"][network_name]["IPAddress"]
         return ip_address
     except docker.errors.NotFound:
