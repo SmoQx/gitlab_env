@@ -65,7 +65,7 @@ def get_container_ip(container_name, network_name="bridge") -> str | None:
 
 def start_script():
     try:
-        if ip := get_container_ip("gitlab", "gitlab_gitlab_net"):
+        if ip := get_container_ip("gitlab", "gitlab_env_gitlab_net"):
             change_ip_address_in_toml(ip)
             print("Changed the ip address")
         else:
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 #    schedule.every(5).minutes.do(start_script)
 #
     while True:
-        container_ip = get_container_ip("gitlab", "gitlab_gitlab_net")
+        container_ip = get_container_ip("gitlab", "gitlab_env_gitlab_net")
         ip_in_file = get_ip_in_file()
         if container_ip != ip_in_file:
             start_script()
