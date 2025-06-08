@@ -49,7 +49,7 @@ Po pierwszym uruchomieniu otrzymujesz:
 
 * **Docker ≥ 24.0** oraz **docker‑compose v2**
 * min. **4 GB RAM** i **10 GB wolnego miejsca**
-* Wolne porty: `80`, `443`, `8929`, `9090`
+* Wolne porty: `80`, `443`, `8929`, `9443`
 
 ---
 
@@ -78,7 +78,7 @@ docker compose up -d
 | -------- | ----- | ----- | ---- |
 | `gitlab` | `gitlab/gitlab-ce:16.10.6-ce.0` | 80, 443, 8929 | Repo + serwer CI |
 | `gitlab-runner` | `gitlab/gitlab-runner:alpine-v16.10.0` | — | Wykonuje joby CI |
-| `portainer` | `portainer/portainer-ce:2.20` | 9090 | UI Docker |
+| `portainer` | `portainer/portainer-ce:2.20` | 9443 | UI Docker |
 | `user_adder` | custom Python                 | — | Dodaje konto usr do gitlab |
 | `runner_ip_changer` | custom Python          | — | Aktualizuje Runner |
 
@@ -90,8 +90,8 @@ Pełny `docker-compose.yaml` znajdziesz w [`/docker-compose.yaml`](./docker-com
 
 ```mermaid
 graph LR
-A --> B[Testy]
-B --> C[Build]
+A --> A[Testy]
+B --> B[Build]
 ```
 
 Etapy domyślnego pipeline:
