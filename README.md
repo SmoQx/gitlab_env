@@ -102,7 +102,7 @@ Etapy domyślnego pipeline:
 
 ## Zarządzanie
 
-* **Portainer:** <http://localhost:9090>
+* **Portainer:** <https://localhost:9443>
 * **Runner logs:** `docker compose logs -f gitlab-runner`
 * **Zmiana hasła root:** `docker exec -it gitlab gitlab-rake "gitlab:password:reset[root]"`
 
