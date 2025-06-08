@@ -1,7 +1,7 @@
 
 # 🛠️ CI/CD Demo – GitLab + Docker
 
-W pełni konteneryzowane środowisko **GitLab Community Edition** z samozarejestrowanym Docker Runnerem oraz panelem **Portainer**.
+W pełni konteneryzowane środowisko **GitLab Community Edition** z Docker Runnerem oraz panelem **Portainer**.
 Uruchomisz je jednym poleceniem, by ćwiczyć zarządzanie pipeline’ami, testy jednostkowe i automatyczny deployment.
 
 ---
@@ -20,7 +20,7 @@ Uruchomisz je jednym poleceniem, by ćwiczyć zarządzanie pipeline’ami, testy
 
 ## O projekcie
 
-Projekt demonstruje **kompletny cykl życia oprogramowania** (lint → test → build → sast → dast → deploy) w GitLab CI/CD.
+Projekt demonstruje **cykl życia oprogramowania** (test → build → artefakt) w GitLab CI/CD.
 Po pierwszym uruchomieniu otrzymujesz:
 
 * własny serwer **GitLab CE** (z prekonfigurowanym użytkownikiem `root`);
@@ -67,6 +67,7 @@ docker compose up --build -d
 ```
 
 > 💡 **Tip:** Podgląd logów `docker compose logs -f gitlab`.
+> 💡 **Tip:** Podgląd stack'a `https://localhost:9443`.
 
 ---
 
