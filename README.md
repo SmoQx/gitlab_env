@@ -29,7 +29,6 @@ Po pierwszym uruchomieniu otrzymujesz:
 * kontener **GitLab Runner** w trybie *Docker‑in‑Docker*;
 * panel **Portainer** do graficznego podglądu kontenerów;
 * przykładową aplikację Python (`projekt_automatyzacja`) z testami `pytest`;
-* rozszerzony pipeline z etapami **SAST** (Semgrep) i **DAST** (OWASP ZAP).
 
 ---
 
@@ -41,8 +40,7 @@ Po pierwszym uruchomieniu otrzymujesz:
 | Runner         | GitLab Runner (Docker executor) |
 | Orkiestracja   | docker‑compose v2               |
 | Aplikacja demo | Python 3.12, customtkinter      |
-| Testy          | pytest, coverage.py             |
-| Linter         | flake8                          |
+| Testy          | pytest, test.py                 |
 | Zarządzanie    | Portainer CE 2.20               |
 
 ---
@@ -81,7 +79,7 @@ docker compose up -d
 | `gitlab` | `gitlab/gitlab-ce:16.10.6-ce.0` | 80, 443, 8929 | Repo + serwer CI |
 | `gitlab-runner` | `gitlab/gitlab-runner:alpine-v16.10.0` | — | Wykonuje joby CI |
 | `portainer` | `portainer/portainer-ce:2.20` | 9090 | UI Docker |
-| `user_adder` | custom Python                 | — | Ustawia hasło root |
+| `user_adder` | custom Python                 | — | Dodaje konto usr do gitlab |
 | `runner_ip_changer` | custom Python          | — | Aktualizuje Runner |
 
 Pełny `docker-compose.yaml` znajdziesz w [`/docker-compose.yaml`](./docker-compose.yaml).
@@ -92,18 +90,14 @@ Pełny `docker-compose.yaml` znajdziesz w [`/docker-compose.yaml`](./docker-com
 
 ```mermaid
 graph LR
-A[Push] --> B[Lint]
-B --> C[Testy]
-C --> D[Build]
-D --> E[Deploy]
+A --> B[Testy]
+B --> C[Build]
 ```
 
 Etapy domyślnego pipeline:
 
-1. **Lint** – `flake8`
-2. **Testy** – `pytest` + raport pokrycia HTML
-3. **Build** – budowa obrazu Docker
-4. **Deploy** – `docker compose up --build`
+1. **Testy** – `pytest` + raport pokrycia xml
+2. **Build** – budowa exec 
 
 ---
 
@@ -128,10 +122,10 @@ Po pierwszym uruchomieniu środowiska zarejestruj własnego runnera:
    Wybierz projekt, w którym chcesz uruchamiać pipeline’y.
 
 3. **Otwórz ustawienia runnerów**  
-   W bocznym menu GitLab wybierz **CI/CD → Runners**.
+   W bocznym menu GitLab wybierz **Settings → CI/CD → Runners**.
 
 4. **Skopiuj token rejestracyjny**  
-   W sekcji **Set up a specific Runner manually** kliknij **Register a new runner** i skopiuj wyświetlony **registration token**.
+   W sekcji **Runners** kliknij **Create project runner**, zaznacz **Run untagged jobs**, **create runner** i skopiuj wyświetlony **token**.
 
 5. **Wstaw token do konfiguracji**  
    Otwórz plik `gitlab-runner-config/config.toml` i podmień linię z tokenem:
@@ -146,22 +140,6 @@ Po pierwszym uruchomieniu środowiska zarejestruj własnego runnera:
     token_expires_at = 0001-01-01T00:00:00Z
     executor = "docker"
 
-6. Zrestartuj runnera
-
-  `docker compose restart gitlab-runner`
-
-7. Zweryfikuj status
+6. Zweryfikuj status
    Nowy runner powinien pojawić się w panelu GitLab jako **active**.
 
----
-
-## Przydatne komendy
-
-| Cel | Komenda |
-| --- | ------- |
-| zatrzymanie środowiska | `docker compose down` |
-| aktualizacja obrazów   | `docker compose pull && docker compose up -d --build` |
-| przebudowa runnera     | `docker compose restart gitlab-runner` |
-| podgląd pokrycia testów | Otwórz `htmlcov/index.html` w artefaktach pipeline |
-
----
