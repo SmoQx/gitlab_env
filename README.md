@@ -15,8 +15,6 @@ Uruchomisz je jednym poleceniem, by ćwiczyć zarządzanie pipeline’ami, testy
 6. [Pipeline CI/CD](#pipeline-cicd)
 7. [Zarządzanie](#zarządzanie)
 8. [Rejestracja GitLab Runnera](#rejestracja-gitlab-runnera)
-9. [Przydatne komendy](#przydatne-komendy)
-10. [Licencja](#licencja)
 
 ---
 
@@ -40,7 +38,7 @@ Po pierwszym uruchomieniu otrzymujesz:
 | Runner         | GitLab Runner (Docker executor) |
 | Orkiestracja   | docker‑compose v2               |
 | Aplikacja demo | Python 3.12, customtkinter      |
-| Testy          | pytest, test.py                 |
+| Testy          | pytest                          |
 | Zarządzanie    | Portainer CE 2.20               |
 
 ---
