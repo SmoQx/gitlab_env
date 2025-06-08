@@ -49,7 +49,7 @@ Po pierwszym uruchomieniu otrzymujesz:
 
 * **Docker ≥ 24.0** oraz **docker‑compose v2**
 * min. **4 GB RAM** i **10 GB wolnego miejsca**
-* Wolne porty: `80`, `443`, `8929`, `9443`
+* Wolne porty: `80`, `443`, `8929`, `9000`, `9090`, `9443`
 
 ---
 
@@ -61,11 +61,11 @@ git clone https://example.com/user/gitlab_env.git
 cd gitlab_env
 
 # 2. Podnieś środowisko (pierwszy start ~5‑10 min)
-docker compose up -d
+docker compose up --build -d
 
 # 3. Zaloguj się do GitLab
-#    URL: http://localhost/
-#    Login: root | Hasło: patrz secrets/.initial_password
+    URL: http://localhost/
+    Login: usr | Hasło: 123password
 ```
 
 > 💡 **Tip:** Podgląd logów `docker compose logs -f gitlab`.
@@ -76,9 +76,9 @@ docker compose up -d
 
 | Kontener | Obraz | Porty | Rola |
 | -------- | ----- | ----- | ---- |
-| `gitlab` | `gitlab/gitlab-ce:16.10.6-ce.0` | 80, 443, 8929 | Repo + serwer CI |
+| `gitlab` | `gitlab/gitlab-ce:16.10.6-ce.0` | 80, 443, 8929, 9090 | Repo + serwer CI |
 | `gitlab-runner` | `gitlab/gitlab-runner:alpine-v16.10.0` | — | Wykonuje joby CI |
-| `portainer` | `portainer/portainer-ce:2.20` | 9443 | UI Docker |
+| `portainer` | `portainer/portainer-ce:2.20` | 9443, 9000 | UI Docker |
 | `user_adder` | custom Python                 | — | Dodaje konto usr do gitlab |
 | `runner_ip_changer` | custom Python          | — | Aktualizuje Runner |
 
