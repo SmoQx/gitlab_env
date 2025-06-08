@@ -90,8 +90,7 @@ Pełny `docker-compose.yaml` znajdziesz w [`/docker-compose.yaml`](./docker-com
 
 ```mermaid
 graph LR
-A --> A[Testy]
-B --> B[Build]
+A[Testy] --> B[Build]
 ```
 
 Etapy domyślnego pipeline:
