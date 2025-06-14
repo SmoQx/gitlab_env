@@ -139,5 +139,5 @@ Po pierwszym uruchomieniu środowiska zarejestruj własnego runnera:
     executor = "docker"
 
 6. Zweryfikuj status
-   Nowy runner powinien pojawić się w panelu GitLab jako **active**.
+   Nowy runner powinien pojawić sie w panelu GitLab jako **active**.
 
